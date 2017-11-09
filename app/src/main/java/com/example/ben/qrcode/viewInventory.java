@@ -69,7 +69,7 @@ public class viewInventory extends AppCompatActivity {
             products = db.getAllproducts();
         }
 
-        MyCustomAdapter adapter = new MyCustomAdapter(this,products);
+        productAdapter adapter = new productAdapter(this,products);
         ListView view = (ListView) findViewById(R.id.ListView);
         view.setAdapter(adapter);
 
