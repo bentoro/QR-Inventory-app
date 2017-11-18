@@ -68,6 +68,6 @@ public class sold {
     }
 
     public String toString(){
-        return  "   " + productnum + "          " + productname + "       " + quantity + "                 " + cost + "            " + date;
+        return  "   " + productnum + "          " + productname + "       " + quantity + "            $" + cost + "            " + date;
     }
 }

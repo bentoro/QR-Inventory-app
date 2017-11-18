@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.List;
 
-public class salesAdapter extends ArrayAdapter<sold> {
-    public salesAdapter(Context context, List<sold> users) {
+public class SalesAdapter extends ArrayAdapter<sold> {
+    public SalesAdapter(Context context, List<sold> users) {
         super(context, 0, users);
     }
 

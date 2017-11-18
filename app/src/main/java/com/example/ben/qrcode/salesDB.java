@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class salesDB extends SQLiteOpenHelper {
@@ -98,4 +99,21 @@ public class salesDB extends SQLiteOpenHelper {
         db.close();
 
     }*/
+
+
+    public List<sold> search(int productnum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        List<sold> gallery = getAllSales();
+        List<sold> filtered = new ArrayList<sold>();
+        int i;
+        for (i =0; i<=gallery.size()-1; i++){
+            int y = Calendar.getInstance().get(Calendar.YEAR);
+            int m = Calendar.getInstance().get(Calendar.MONTH)+1;
+            int d = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+            if (gallery.get(i).getNum() == productnum){
+                filtered.add(new sold(gallery.get(i).getId(),gallery.get(i).getNum(),gallery.get(i).getName(),(gallery.get(i).getQuantity()), gallery.get(i).getCost(),gallery.get(i).getDate()));
+            }
+        }
+        return filtered;
+    }
 }

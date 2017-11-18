@@ -64,7 +64,7 @@ public class viewSales extends AppCompatActivity {
         ListView list = (ListView) findViewById(R.id.ListView);
         salesDB db = new salesDB(this);
         List<sold> sales = db.getAllSales();
-        salesAdapter adapter = new salesAdapter(this, sales);
+        SalesAdapter adapter = new SalesAdapter(this, sales);
         ListView view = (ListView) findViewById(R.id.ListView);
         view.setAdapter(adapter);
     }

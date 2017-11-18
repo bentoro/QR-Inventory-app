@@ -1,7 +1,5 @@
 package com.example.ben.qrcode;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,11 +26,18 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        Button view = (Button) findViewById(R.id.btn_view);
-        view.setOnClickListener(new OnClickListener() {
+        Button inv = (Button) findViewById(R.id.btn_inv);
+        inv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                alert();
+                startActivity(new Intent(MainActivity.this,viewSales.class));
+            }
+        });
+        Button sales = (Button) findViewById(R.id.btn_sales);
+        sales.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,viewInventory.class));
             }
         });
         Button scan = (Button) findViewById(R.id.btn_scan);
@@ -42,26 +47,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,scanner.class));
             }
         });
-    }
-
-    public void alert(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Select Database");
-        builder.setPositiveButton("Sales", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(MainActivity.this,viewSales.class));
-            }
-        });
-        builder.setNegativeButton("Inventory", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(MainActivity.this,viewInventory.class));
-            }
-        });
-        builder.setMessage("Select which database you would like to view.");
-        AlertDialog alert1 = builder.create();
-        alert1.show();
     }
 
 }

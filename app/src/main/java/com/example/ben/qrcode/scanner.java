@@ -8,6 +8,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 
 import com.google.zxing.Result;
 
@@ -64,7 +67,7 @@ public class scanner extends AppCompatActivity implements ZXingScannerView.Resul
         builder.setNeutralButton("Remove", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                remove();
+                quantity();
             }
         });
         builder.setMessage("Product # :" + rawResult.getText());
@@ -102,7 +105,48 @@ public class scanner extends AppCompatActivity implements ZXingScannerView.Resul
         editor.commit();
     }
 
-    public void remove(){
+    public void quantity(){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.prompts, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.editTextDialogUserInput);
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // get user input and set it to result
+                                // edit text
+                                //result.setText(userInput.getText());
+                                int quant = Integer.parseInt(userInput.getText().toString());
+                                remove(quant);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+    }
+
+    public void remove(int quantity){
         System.out.println("msg: " + msg);
         inventoryDB db = new inventoryDB(this);
         salesDB db1 = new salesDB(this);
@@ -113,8 +157,8 @@ public class scanner extends AppCompatActivity implements ZXingScannerView.Resul
             int m = Calendar.getInstance().get(Calendar.MONTH)+1;
             int d = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
             if (gallery.get(i).getNum() == msg){
-                db.updateProducts(new product(gallery.get(i).getId(),gallery.get(i).getNum(),gallery.get(i).getName(),(gallery.get(i).getQuantity()-1), gallery.get(i).getCost()));
-                db1.addSales(new sold(1,gallery.get(i).getNum(),gallery.get(i).getName(),1,gallery.get(i).getCost(), y+"/"+m+"/"+d));
+                db.updateProducts(new product(gallery.get(i).getId(),gallery.get(i).getNum(),gallery.get(i).getName(),(gallery.get(i).getQuantity()-quantity), gallery.get(i).getCost()));
+                db1.addSales(new sold(1,gallery.get(i).getNum(),gallery.get(i).getName(),quantity,gallery.get(i).getCost(), y+"/"+m+"/"+d));
             }
 
         }
