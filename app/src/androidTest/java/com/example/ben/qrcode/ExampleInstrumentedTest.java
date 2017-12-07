@@ -7,10 +7,10 @@ import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.List;
 import java.util.Calendar;
+import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -24,12 +24,12 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getTargetContext();
         inventoryDB db = new inventoryDB(appContext);
 
-        int productnum = 3001;
-        String productname = "Unit Test";
+        int productnum = 3002;
+        String productname = "Unit Test 1";
         int quantity = 100;
         int cost = 1000;
 
-        db.addProducts(new product(1,productnum,productname,quantity,cost));
+        //db.addProducts(new product(1,productnum,productname,quantity,cost));
 
         List<product> products = db.search(productnum);
         for(int i = 0; i<=products.size()-1;i++){
@@ -65,7 +65,9 @@ public class ExampleInstrumentedTest {
             assertEquals(1, sales.get(i).getQuantity());
             assertEquals(cost, sales.get(i).getCost());
 
+
         }
+        products = db.search(productnum);
         db.updateProducts(new product(products.get(0).getId(),products.get(0).getNum(),products.get(0).getName(),(quantity), products.get(0).getCost()));
 
 
